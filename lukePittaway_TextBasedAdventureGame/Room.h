@@ -12,15 +12,18 @@ using std::string;
 class Room
 {
 public:
+	Item* item;
+	
+public:
 	Room(string description, Item *item);
 	~Room();
 
 public:
-	const void Description();
+	const void Description(int roomType);
+	
 
-public:
-	Item* item;
-	string description;
-
+private:
+	string m_description;
+	
 };
 

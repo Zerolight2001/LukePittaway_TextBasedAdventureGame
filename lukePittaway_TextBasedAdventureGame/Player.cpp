@@ -1,6 +1,7 @@
 #include "Player.h"
 
 Player::Player()
+	: playerX{ 0 }, playerY{ 0 }
 {
 }
 

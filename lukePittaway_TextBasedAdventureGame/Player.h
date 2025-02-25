@@ -6,6 +6,10 @@ using std::string
 class Player
 {
 public:
+	int playerX;
+	int playerY;
+
+public:
 	Player();
 	~Player();
 	
