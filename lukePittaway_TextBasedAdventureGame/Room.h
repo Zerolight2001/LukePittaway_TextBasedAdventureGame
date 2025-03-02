@@ -15,15 +15,16 @@ public:
 	Item* item;
 	
 public:
-	Room(string description, Item *item);
+	Room(string description, Item* item);
 	~Room();
 
 public:
 	const void Description(int roomType);
+
 	
 
 private:
-	string m_description;
+	string m_description;	
 	
 };
 

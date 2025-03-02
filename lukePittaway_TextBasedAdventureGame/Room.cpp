@@ -1,7 +1,6 @@
 #include "Room.h"
 
-const int DUNGEON_HEIGHT = 6;
-const int DUNGEON_WIDTH = 10;
+
 
 const int EMPTY = 0;
 const int LAMP = 1;
@@ -14,11 +13,14 @@ const int MAX_RAND_TYPE = CAT + 1;
 Room::Room(string description, Item* item)
 	:m_description{ description }, item{ item }
 {
+	
 }
 
 Room::~Room()
 {
 }
+
+
 
 const void Room::Description(int roomType)
 {
@@ -27,25 +29,26 @@ const void Room::Description(int roomType)
 	case EMPTY:
 	{
 		std::cout << "Empty room, nothing but dusty floorboards\n";
+		break;
 	}
 	case LAMP:
 	{
-		std::cout << Lamp::Description;
+		std::cout << &Lamp::Description;
 		break;
 	}
 	case BOX_OF_DONUTS:
 	{
-		std::cout << BoxOfDonuts::Description;
+		std::cout << &BoxOfDonuts::Description;
 		break;
 	}
 	case CAT:
 	{
-		std::cout << Cat::Description;
+		std::cout << &Cat::Description;
 		break;
 	}
 	case ENTRY:
 	{
-		std::cout << "This is the entry of the dungeon.\nLooks like its blocked of so you will have to find another way out\n";
+		std::cout << "This is the entry of the dungeon.\nLooks like its collapsed as you entered of so you will have to find another way out\n";
 		break;
 	}
 	case EXIT:
@@ -59,8 +62,8 @@ const void Room::Description(int roomType)
 		break;
 	}
 	}
-	
-
 	return void();
 }
+
+
 

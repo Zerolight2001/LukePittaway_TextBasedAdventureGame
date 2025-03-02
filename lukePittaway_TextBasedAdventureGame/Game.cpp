@@ -2,55 +2,45 @@
 
 #include <iostream>
 
-const int DUNGEON_HEIGHT = 6;
-const int DUNGEON_WIDTH = 10;
 
-const int EMPTY = 0;
-const int LAMP = 1;
-const int BOX_OF_DONUTS = 2;
-const int CAT = 3;
-const int ENTRY = 4;
-const int EXIT = 5;
-const int MAX_RAND_TYPE = CAT + 1;
 
 Game::Game()
-	: m_isRunning{ true }
+	: m_isRunning{ true }, m_player{ new Player },
+	m_entry{ new Room("Entry", nullptr)}, m_room1{ new Room("Empty", nullptr) }, m_room2{ new Room("Empty", nullptr) },
+	m_room3{ new Room("Empty", nullptr) }, m_catRoom{ new Room("Cat", &cat) }, m_donutRoom{ new Room("Donuts", &boxOfDonuts) },
+	m_lampRoom{ new Room("Lamp", &lamp)}, m_exit{new Room("Exit", nullptr)}		
 {
-}
+	// Fill array with all the rooms
+	m_rooms[0][0] = m_entry;
+	m_rooms[0][1] = m_room1;
+	m_rooms[0][2] = m_room2;
+	m_rooms[0][3] = m_room3;
+	m_rooms[1][0] = m_catRoom;
+	m_rooms[1][1] = m_lampRoom;
+	m_rooms[1][2] = m_donutRoom;
+	m_rooms[1][3] = m_exit;
+
+};
+
 
 Game::~Game()
 {
+
+	delete m_exit;
+	delete m_lampRoom;
+	delete m_donutRoom;
+	delete m_catRoom;
+	delete m_room3;
+	delete m_room2;
+	delete m_room1;
+	delete m_entry;
+	delete m_player;
+	m_player = nullptr;
 }
 
-void Game::Run()
+int Game::Run()
 {
-	// Create player
-	Player player;
-
-	// Create dungeon map
-	int rooms[DUNGEON_HEIGHT][DUNGEON_WIDTH];
-	
-	srand(time(nullptr));
-
-	// Assigning values to the rooms randomly 
-	for (int i = 0; i < DUNGEON_HEIGHT; ++i)
-	{
-		int roomType = rand() % (MAX_RAND_TYPE * 2);
-		for (int j = 0; j < DUNGEON_WIDTH; i++)
-		{
-			if (roomType < MAX_RAND_TYPE)
-			{
-				rooms[i][j] = roomType;
-			}
-			else
-			{
-				rooms[i][j] = EMPTY;
-			}
-		}
-	}
-	// Setting the entry and exit of the map
-	rooms[0][0] = ENTRY;
-	rooms[DUNGEON_HEIGHT - 1][DUNGEON_WIDTH - 1] = EXIT;
+		
 	
 
 	// Welcome text
@@ -61,51 +51,53 @@ void Game::Run()
 	// Game loop
 	while (m_isRunning)
 	{
-		// Get description for the rooms 
-		rooms[player.playerX][player.playerY];
-		
+	
 
-		
+		PossibleActions(m_playerX, m_playerY);
+
+	
 
 
-
-		// Movement
-		
+		// Movement		
 		std::cout << "What direction would you like to move?\n";
 		std::cin >> direction;
 		switch (HandleDirection(direction))
 			{
 		case 1:
 		{
-			std::cout << "You have moved north\n";
+			std::cout << "You have moved north\n\n";
+			m_rooms[m_playerX][m_playerY]->Description(0);
 			break;
 		}
 		case 2:
 		{
-			std::cout << "You have moved south\n";
+			std::cout << "You have moved south\n\n";
+			m_rooms[m_playerX][m_playerY]->Description(0);
 			break;
 		}
 		case 3:
 		{
-			std::cout << "You have moved east\n";
+			std::cout << "You have moved east\n\n";
 			break;
 		}
 		case 4:
 		{
-			std::cout << "You have moved west\n";
+			std::cout << "You have moved west\n\n";
 			break;
 		}
 		default:
 		{
-			std::cout << "Invalid input\n";
+			std::cout << "Invalid input\n\n";
 			continue;
 		}
 		}
 		
 
-
+		
 
 	}
+
+	return EXIT_SUCCESS;
 }
 
 int Game::HandleDirection(string direction)
@@ -131,4 +123,55 @@ int Game::HandleDirection(string direction)
 		return -1;
 	}
 
+}
+
+string Game::PossibleActions(int posX, int posY)
+{
+	if (m_rooms[posX][posY] == m_entry)
+	{
+		std::cout << "possible actions:\n-South.\n\n";
+		if (HandleDirection(direction) == 2)
+		{
+			m_playerX = 0;
+			m_playerY = 1;
+		}
+	}
+	if (m_rooms[posX][posY] == m_room1)
+	{
+		std::cout << "possible actions:\n-East\n-West\n\n";
+		if (HandleDirection(direction) == 3)
+		{
+			m_playerX = 1;
+			m_playerY = 0;
+
+		}
+	}
+	if (m_rooms[posX][posY] == m_lampRoom)
+	{
+		std::cout << "possible actions:\n-East\n-South\n-Use\n\n";
+	}
+	if (m_rooms[posX][posY] == m_room2)
+	{
+		std::cout << "possible actions\n-North\n\n";
+	}
+	if (m_rooms[posX][posY] == m_catRoom)
+	{
+		std::cout << "possible actions\n-East\n-South\n\n";
+	}
+	if (m_rooms[posX][posY] == m_donutRoom)
+	{
+		std::cout << "possible actions\n-North\n-use\n\n";
+	}
+	if (m_rooms[posX][posY] == m_room3)
+	{
+		std::cout << "possible actions\n-North\n-West\n\n";
+	}
+	if (m_rooms[posX][posY] == m_exit)
+	{
+		std::cout << "possible actions\n-South\n-Exit\n\n";
+	}
+
+
+
+	return string();
 }
