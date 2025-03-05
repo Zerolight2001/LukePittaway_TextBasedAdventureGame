@@ -27,7 +27,7 @@ public:
 	const void Description();
 	
 private:
-	string m_description;
+	string m_description;	
 	
 
 

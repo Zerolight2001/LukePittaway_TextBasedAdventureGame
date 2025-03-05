@@ -4,6 +4,7 @@
 Room::Room(string description, Item* item)
 	:m_description{ description }, item{ item }
 {
+	
 }
 
 Room::~Room()
