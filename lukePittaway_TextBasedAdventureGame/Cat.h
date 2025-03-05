@@ -13,5 +13,7 @@ public:
 
 private:
 	bool m_purring;
+	int m_patCount;
+	string m_description;
 };
 

@@ -13,5 +13,6 @@ public:
 
 private:
 	bool m_turnedOn;
+	string m_description;
 };
 

@@ -13,5 +13,7 @@ public:
 
 private:
 	int m_count;
+	string m_description;
+	bool m_isThereDonuts;
 };
 
