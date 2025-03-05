@@ -99,13 +99,12 @@ Game::~Game()
 		std::cin >> m_command;
 
 		HandleCommand(m_command);
-					
-	
+						
 	}
 }
 
 // check to see if command is valid depending on what room it is in
-// take input and move player to next room or use item
+// take input and move player to next room or use an item
 void Game::HandleCommand(string command)
 {
 	int playerX = m_player->Getposition().x;
@@ -263,30 +262,25 @@ string Game::PossibleActions()
 	{
 		return "Possible Action:\n-South\n-East\n-Use\n\n";
 	}
-
 	else if (m_rooms[playerX][playerY] == m_rooms[0][3])
 	{
 		return "Possible Action:\n-North\n\n";
 	}
-
 	else if (m_rooms[playerX][playerY] == m_rooms[1][0])
 	{
 		return "Possible Action:\n-West\n-East\n-South\n-Use\n\n";
 	}
-
 	else if (m_rooms[playerX][playerY] == m_rooms[1][1])
 	{
 		return "Possible Action:\n-North\n-Use\n\n";
 	}
-
 	else if (m_rooms[playerX][playerY] == m_rooms[1][2])
 	{
 		return "Possible Action:\n-North\n-East\n\n";
 	}
-
 	else if (m_rooms[playerX][playerY] == m_rooms[1][3])
 	{
-		return "Possible Action:\n-South\n-Spell\n\n";
+		return "Possible Action:\n-South\n-CheckSpells\n\n";
 	}
 	else
 	{

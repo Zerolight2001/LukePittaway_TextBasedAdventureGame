@@ -1,10 +1,15 @@
 #pragma once
 #include <string>
+#include <vector>
 
+using std::vector;
+
+#include "Spell.h"
 #include "Vector2.h"
 
-using std::string
-;
+
+using std::string;
+
 class Player
 {
 public:
@@ -13,6 +18,7 @@ public:
 public:
 	Player();
 	~Player();
+
 	
 public:
 	bool FindSpell(string spell);
@@ -20,6 +26,8 @@ public:
 	Vector2 Getposition();
 
 private:
+	vector<string> m_spells;
 	
+
 };
 
