@@ -7,16 +7,27 @@ Lamp::Lamp()
 
 const void Lamp::Description()
 {
-    std::cout << "The room is pitch black but you can faintly see the outline of a lamp\n";
-    return void();
+    std::cout << m_description;
+    
 }
 
 void Lamp::Use()
 {
-    m_turnedOn = true;
-    if (m_turnedOn)
+    if (m_turnedOn == false) 
     {
-        std::cout << "The lamp has turned on. You can now see the empty room around you.\n";
+        m_turnedOn = true;
+        if (m_turnedOn)
+        {
+            m_description = "The lamp has turned on. You can now see the empty room around you.\n";
+        }
+    }
+    else if (m_turnedOn == true)
+    {
+        m_turnedOn = false;
+        if (m_turnedOn)
+        {
+            m_description = "The room is dark. You can't see sh**.\n";
+        }
     }
 
 }

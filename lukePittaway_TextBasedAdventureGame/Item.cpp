@@ -1,9 +1,6 @@
 #include "Item.h"
 
-Item::Item()
+string Item::ToString(string description)
 {
-}
-
-Item::~Item()
-{
+	return description;
 }
