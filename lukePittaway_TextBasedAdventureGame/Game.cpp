@@ -79,7 +79,7 @@ Game::~Game()
 	m_player = nullptr;
 }
 
-void Game::Run()
+ void Game::Run()
 {
 	// Welcome text
 	std::cout << "Welcome!\n";
