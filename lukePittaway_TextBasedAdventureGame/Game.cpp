@@ -286,7 +286,6 @@ void Game::HandleCommand(string command)
 
 }
 
-
 // gets the location of player and gives possible actions 
 string Game::PossibleActions()
 {	
@@ -388,14 +387,15 @@ void Game::Combat(Enemy enemy)
 
 	srand(time(nullptr));
 	
-
+	// Encounter text
 	std::cout << "You walk into the room and feel something tug at your feet\n";
-	std::cout << "You look down to see that an ethernet cable has just been ripped from the wall.\n";
+	std::cout << "You look down to see that an ethernet cable has just been ripped from the wall\n";
 	std::cout << "Its at this moment you hear raging footsteps stampeeding down the corridor\n\n";
-	std::cout << "A neardy looking guy comes bursting out from depths of the dungeon and sees you standing over the chord\n\n";
-
+	std::cout << "A guy comes bursting out from depths of the dungeon still wearing his headset and holding a controller\n";
+	std::cout << "He sees you standing over the chord\n\n";
 	std::cout << "You are now in combat!\n\n";
 
+	// Fight loop
 	while (m_isCombat)
 	{		
 		// Show health
@@ -412,6 +412,8 @@ void Game::Combat(Enemy enemy)
 
 			if (m_fCommand == "attack" || m_fCommand == "Attack")
 			{
+				// Clear page
+				std::system("cls");
 				std::cout << "You punch him\n\n";
 				m_enemy->TakeDamage(m_player->GetDamage());
 			}
@@ -421,14 +423,20 @@ void Game::Combat(Enemy enemy)
 			}
 			else if (m_fCommand == "roll" || m_fCommand == "Roll")
 			{
-				std::cout << "you roll out of the way of danger\n";
+				// Clear page
+				std::system("cls");
+				std::cout << "you roll out of the way of danger\n\n";
 			}
 			else if (m_fCommand == "run" || m_fCommand == "Run")
 			{
-				std::cout << "There is no running you must stay and face what you have done\n";
+				// Clear page
+				std::system("cls");
+				std::cout << "There is no running!! you must stay and face what you have done\n\n";
 			}
 			else
 			{
+				// Clear page
+				std::system("cls");
 				std::cout << "Invalid input\n";
 			}
 		}
@@ -450,11 +458,11 @@ void Game::Combat(Enemy enemy)
 			{
 				// Attack
 				if (m_fCommand == "roll" || m_fCommand == "Roll")
-				{					
+				{							
 					break;
 				}
 				else
-				{
+				{					
 					std::cout << m_enemy->name << " has attacked you\n\n";
 					m_player->TakeDamage(m_enemy->Getdamage());
 					break;

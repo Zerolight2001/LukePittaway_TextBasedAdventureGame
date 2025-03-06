@@ -29,9 +29,9 @@ Player::~Player()
 	position = nullptr;
 }
 
+// Binary seach. returns true if spell was found 
 bool Player::FindSpell(string spell)
-{
-	// Binary seach. returns true if spell was found 
+{	
 	std::sort(m_spells.begin(), m_spells.end(), &Spell::compare);
 
 	int lowIndex = 0;
@@ -61,7 +61,7 @@ bool Player::FindSpell(string spell)
 
 	return false;
 }
-
+// prints what spell you used and then what spell description 
 void Player::UseSpell(string spell)
 {
 
@@ -77,7 +77,7 @@ void Player::UseSpell(string spell)
 		spark->PrintDescription(spark->name, spell);
 	}
 }
-
+// Set player postion
 void Player::Setposisiton(Vector2 pos)
 {
 	if (position != nullptr)
@@ -85,7 +85,7 @@ void Player::Setposisiton(Vector2 pos)
 		*position = pos;
 	}
 }
-
+// Gets player position
 Vector2 Player::Getposition()
 {
 	if (position != nullptr)
@@ -94,7 +94,7 @@ Vector2 Player::Getposition()
 	}
 	return { 0, 0 };
 }
-
+// hurts the player
 void Player::TakeDamage(int damage)
 {
 	m_health -= damage;
