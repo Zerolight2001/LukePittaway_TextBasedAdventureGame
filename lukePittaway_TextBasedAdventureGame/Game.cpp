@@ -94,10 +94,7 @@ Game::~Game()
 		{
 			// Clear page
 			std::system("cls");
-		}
-			
-		
-		
+		}			
 	}
 
 	std::cout << "Game over, you may leave now...\n";
