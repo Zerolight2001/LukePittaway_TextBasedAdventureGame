@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="BoxOfDonuts.cpp" />
     <ClCompile Include="Cat.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Lamp.cpp" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <ClInclude Include="BoxOfDonuts.h" />
     <ClInclude Include="Cat.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Lamp.h" />

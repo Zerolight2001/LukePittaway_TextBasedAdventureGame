@@ -3,6 +3,11 @@
 
 #include "Player.h"
 #include "Room.h"
+#include "Enemy.h"
+
+class Enemy;
+class Player;
+class Room;
 
 const int MAP_HEIGHT = 2;
 const int MAP_WIDTH = 4;
@@ -21,16 +26,20 @@ public:
 	string PossibleActions();
 	void PrintDescription();
 	void DoMagic();
+	void Combat(Enemy enemy);
 
 
 
 private:
 	bool m_isRunning;
+	bool m_isCombat;
+	string m_fCommand;
 	string m_command;
 	string m_spellCommand;
 	string m_spell;
 
-	Player* m_player;	
+	Player* m_player;
+	Enemy* m_enemy;
 
 	// Item vairables
 	Cat* m_cat;

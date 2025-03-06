@@ -4,8 +4,8 @@
 #include <cstdlib>
 
 Game::Game()
-	: m_isRunning{ true }, m_player{ new Player }, m_cat{new Cat}, m_boxOfDonuts{new BoxOfDonuts},
-	m_lamp{ new Lamp }
+	: m_isRunning{ true },m_isCombat{ false }, m_player{ new Player }, m_cat{new Cat}, m_boxOfDonuts{new BoxOfDonuts},
+	m_lamp{ new Lamp }, m_enemy{ new Enemy("George", 50, 10 ) }
 {
 	// Create rooms 
 	m_rEntry = new Room("This is the entry of the dungeon.\nLooks like its blocked of so you will have to find another way out\n", nullptr);
@@ -14,9 +14,8 @@ Game::Game()
 	m_rEmpty2 = new Room("Empty room, nothing but dusty floorboards\n", nullptr);
 	m_rCat = new Room("Cat", m_cat);
 	m_rDonut = new Room("Donut", m_boxOfDonuts);
-	m_rEmpty3 = new Room("Empty room, nothing but dusty floorboards\n", nullptr);
+	m_rEmpty3 = new Room("Empty room, nothing but dusty floorboards, and geoges corpse...\n", nullptr);
 	m_rExit = new Room("You found the exit! Seems to blocked with a highly famable wooden door\n", nullptr);
-
 
 	// Put rooms in an array 
 	m_rooms[0][0] = m_rEntry;
@@ -48,6 +47,8 @@ Game::~Game()
 	m_rEmpty1 = nullptr;
 	delete m_rEntry;
 	m_rEntry = nullptr;
+	delete m_enemy;
+	m_enemy = nullptr;
 	delete m_lamp;
 	m_lamp = nullptr;
 	delete m_boxOfDonuts;
@@ -62,13 +63,17 @@ Game::~Game()
 {
 	// Welcome text
 	std::cout << "Welcome!\n";
-	std::cout << "Move through the dungeon by typing North, South, East, or West\n\n";
-		
-
+	std::cout << "Move through the dungeon by typing North, South, East, or West\n\n";	
 
 	// Game loop
 	while (m_isRunning)
 	{
+
+		if (m_rooms[m_player->Getposition().x][m_player->Getposition().y] == m_rooms[1][2])
+		{
+			Combat(*m_enemy);
+		}
+
 		// Print room description	
 		PrintDescription();
 		// Give possible actions
@@ -375,5 +380,116 @@ void Game::DoMagic()
 	{
 		std::cout << "SPELL NOT FOUND! Magic has to be very precise\n\n";		
 	}
+}
+
+void Game::Combat(Enemy enemy)
+{
+	m_isCombat = true;
+
+	srand(time(nullptr));
+	
+
+	std::cout << "You walk into the room and feel something tug at your feet\n";
+	std::cout << "You look down to see that an ethernet cable has just been ripped from the wall.\n";
+	std::cout << "Its at this moment you hear raging footsteps stampeeding down the corridor\n\n";
+	std::cout << "A neardy looking guy comes bursting out from depths of the dungeon and sees you standing over the chord\n\n";
+
+	std::cout << "You are now in combat!\n\n";
+
+	while (m_isCombat)
+	{		
+		// Show health
+		std::cout << "Player health: " << m_player->GetHealth() << "\n";
+		std::cout << "Enemy health: " << m_enemy->GetHealth() << "\n\n";
+		
+		// if player is alive let them do something 
+		if (m_player->GetHealth() > 0)
+		{
+			std::cout << "What action would you like to take\n";
+			std::cout << "Possible actions:\n-Attack\n-spells\n-Roll\n-run\n";
+			std::cin >> m_fCommand;
+			std::cout << "\n\n";
+
+			if (m_fCommand == "attack" || m_fCommand == "Attack")
+			{
+				std::cout << "You punch him\n\n";
+				m_enemy->TakeDamage(m_player->GetDamage());
+			}
+			else if (m_fCommand == "spells" || m_fCommand == "Spells")
+			{
+				DoMagic();
+			}
+			else if (m_fCommand == "roll" || m_fCommand == "Roll")
+			{
+				std::cout << "you roll out of the way of danger\n";
+			}
+			else if (m_fCommand == "run" || m_fCommand == "Run")
+			{
+				std::cout << "There is no running you must stay and face what you have done\n";
+			}
+			else
+			{
+				std::cout << "Invalid input\n";
+			}
+		}
+		else 
+		{
+			m_isCombat = false;
+			m_isRunning = false;
+		}
+		
+		// pick random number between 1 and 3
+		int eAttack = (rand() % 3) + 1;
+
+		// If the enemy still has health, make an action 
+		if (m_enemy->GetHealth() > 0)
+		{
+			switch (eAttack)
+			{
+			case 1:
+			{
+				// Attack
+				if (m_fCommand == "roll" || m_fCommand == "Roll")
+				{					
+					break;
+				}
+				else
+				{
+					std::cout << m_enemy->name << " has attacked you\n\n";
+					m_player->TakeDamage(m_enemy->Getdamage());
+					break;
+				}				
+			}
+			case 2:
+			{
+				// Block
+				if (m_fCommand == "attack" || m_fCommand == "Attack")
+				{
+					std::cout << "you got blocked\n\n";
+					m_enemy->GainHealth(m_player->GetDamage());
+				}
+				break;
+			}
+			case 3:
+			{
+				// freezes
+				std::cout << "He is to angry to move\n\n";
+				break;
+			}
+			}
+		}
+		else
+		{
+			m_isCombat = false;
+		}
+	
+
+	}
+
+	// Clear page
+	std::system("cls");
+	std::cout << enemy.name << " Has Been Defeated\n\n";
+
+
 }
 
