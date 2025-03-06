@@ -13,11 +13,6 @@ class Room
 {
 public:
 	Item* item;
-	
-	Room* northPtr = nullptr;
-	Room* southPtr = nullptr;
-	Room* eastPtr = nullptr;
-	Room* westPtr = nullptr;
 
 public:
 	Room(string description, Item* item);

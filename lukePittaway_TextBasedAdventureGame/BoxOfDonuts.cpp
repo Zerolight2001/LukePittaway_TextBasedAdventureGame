@@ -1,7 +1,7 @@
 #include "BoxOfDonuts.h"
 
 BoxOfDonuts::BoxOfDonuts()
-	: m_count{ 5 }, m_isThereDonuts{ true }
+	: m_count{ 3 }, m_isThereDonuts{ true }
 {
 	m_description = "A box of semi questionable donuts sit on a bench infront of you.\n";
 }

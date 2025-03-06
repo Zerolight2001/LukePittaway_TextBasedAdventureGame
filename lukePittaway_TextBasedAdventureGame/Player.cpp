@@ -3,33 +3,40 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
-using std::vector;
+#include "Spell.h"
 
 
 Player::Player()
-	: m_position{ new Vector2( 0, 0 )}
+	: position{ new Vector2( 0, 0 ) }, fireball{ new Spell("Fireball" , 5) }, spark{ new Spell( "Spark", 3 ) }, usedFireball{ false }
 {
-	
+	m_spells.emplace_back(fireball->name);
+	m_spells.emplace_back(spark->name);
+
+	fireball->description = "A ball of fire wobbles out of your hands and slowly makes its way outwards\n\n";
+	spark->description = "A few little sparks shoot out from your fingers...\nYou definitly should have payed more attention in your \"how to be a wizard seminare\" \n\n";
+
 }
 
 Player::~Player()
 {
-	delete m_position;
-	m_position = nullptr;
+	delete spark;
+	spark = nullptr;
+	delete fireball;
+	fireball = nullptr;
+	delete position;
+	position = nullptr;
 }
 
 bool Player::FindSpell(string spell)
 {
-	std::sort(m_spells.begin(), m_spells.end());
+	// Binary seach. returns true if spell was found 
+	std::sort(m_spells.begin(), m_spells.end(), &Spell::compare);
 
 	int lowIndex = 0;
 	int highIndex = static_cast<int>(m_spells.size() - 1);
 
 	int midpoint = (lowIndex + highIndex) / 2;
 	
-	
-
 	while (lowIndex <= highIndex)
 	{
 		if (m_spells[midpoint] == spell)
@@ -53,19 +60,35 @@ bool Player::FindSpell(string spell)
 	return false;
 }
 
-void Player::Setposisiton(Vector2 position)
+void Player::UseSpell(string spell)
 {
-	if (m_position != nullptr)
+
+	if (fireball->compare(fireball->name, spell))
 	{
-		*m_position = position;
+		fireball->cast();
+		usedFireball = true;
+		fireball->PrintDescription(fireball->name, spell);
+	}
+	else if (spark->compare(spark->name, spell))
+	{
+		spark->cast();
+		spark->PrintDescription(spark->name, spell);
+	}
+}
+
+void Player::Setposisiton(Vector2 pos)
+{
+	if (position != nullptr)
+	{
+		*position = pos;
 	}
 }
 
 Vector2 Player::Getposition()
 {
-	if (m_position != nullptr)
+	if (position != nullptr)
 	{
-		return *m_position;
+		return *position;
 	}
 	return { 0, 0 };
 }

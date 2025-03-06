@@ -20,12 +20,15 @@ public:
 	void HandleCommand(string direction);
 	string PossibleActions();
 	void PrintDescription();
+	void DoMagic();
 
 
 
 private:
 	bool m_isRunning;
 	string m_command;
+	string m_spellCommand;
+	string m_spell;
 
 	Player* m_player;	
 

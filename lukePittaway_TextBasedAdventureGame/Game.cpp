@@ -1,8 +1,7 @@
 #include "Game.h"
 
 #include <iostream>
-
-
+#include <cstdlib>
 
 Game::Game()
 	: m_isRunning{ true }, m_player{ new Player }, m_cat{new Cat}, m_boxOfDonuts{new BoxOfDonuts},
@@ -16,27 +15,8 @@ Game::Game()
 	m_rCat = new Room("Cat", m_cat);
 	m_rDonut = new Room("Donut", m_boxOfDonuts);
 	m_rEmpty3 = new Room("Empty room, nothing but dusty floorboards\n", nullptr);
-	m_rExit = new Room("Congrats you found the exit!\nYou win!!\n", nullptr);
+	m_rExit = new Room("You found the exit! Seems to blocked with a highly famable wooden door\n", nullptr);
 
-
-	// Set what room can see what
-	m_rEntry->southPtr = m_rEmpty1;
-
-	m_rEmpty1->eastPtr = m_rCat;
-	m_rEmpty1->westPtr = m_rLamp;
-
-	m_rLamp->eastPtr = m_rEmpty1;
-	m_rLamp->southPtr = m_rEmpty2;
-
-	m_rEmpty2->northPtr = m_rLamp;
-
-	m_rCat->southPtr = m_rDonut;
-	m_rCat->eastPtr = m_rEmpty3;
-
-	m_rDonut->northPtr = m_rCat;
-
-	m_rEmpty3->northPtr = m_rExit;
-	m_rEmpty3->westPtr = m_rCat;
 
 	// Put rooms in an array 
 	m_rooms[0][0] = m_rEntry;
@@ -49,7 +29,6 @@ Game::Game()
 	m_rooms[1][3] = m_rExit;
 
 }
-
 
 Game::~Game()
 {
@@ -99,8 +78,14 @@ Game::~Game()
 		std::cin >> m_command;
 
 		HandleCommand(m_command);
-						
+		
+		
+		
+		//std::system("cls");
+		
 	}
+
+	std::cout << "Game over, you may leave now...\n";
 }
 
 // check to see if command is valid depending on what room it is in
@@ -118,6 +103,10 @@ void Game::HandleCommand(string command)
 		{
 			m_player->Setposisiton(Vector2(0, 1));
 		}
+		else if (command == "spells" || command == "Spells")
+		{
+			DoMagic();			
+		}
 		else
 		{
 			std::cout << "Invalid input!\n\n";
@@ -133,6 +122,10 @@ void Game::HandleCommand(string command)
 		else if (command == "west" || command == " West")
 		{
 			m_player->Setposisiton(Vector2(0, 2));
+		}
+		else if (command == "spells" || command == "Spells")
+		{
+			DoMagic();
 		}
 		else
 		{
@@ -154,6 +147,10 @@ void Game::HandleCommand(string command)
 		{
 			m_lamp->Use();
 		}
+		else if (command == "spells" || command == "Spells")
+		{
+			DoMagic();
+		}
 		else
 		{
 			std::cout << "Invalid input!\n\n";
@@ -165,6 +162,10 @@ void Game::HandleCommand(string command)
 		if (command == "north" || command == "North")
 		{
 			m_player->Setposisiton(Vector2(0, 2));
+		}
+		else if (command == "spells" || command == "Spells")
+		{
+			DoMagic();
 		}
 		else
 		{
@@ -190,6 +191,10 @@ void Game::HandleCommand(string command)
 		{
 			m_cat->Use();
 		}
+		else if (command == "spells" || command == "Spells")
+		{
+			DoMagic();
+		}
 		else
 		{
 			std::cout << "Invalid input!\n\n";
@@ -206,6 +211,10 @@ void Game::HandleCommand(string command)
 		{
 			m_boxOfDonuts->Use();
 		}
+		else if (command == "spells" || command == "Spells")
+		{
+			DoMagic();
+		}
 		else
 		{
 			std::cout << "Invalid input!\n\n";
@@ -218,9 +227,13 @@ void Game::HandleCommand(string command)
 		{
 			m_player->Setposisiton(Vector2(1, 3));
 		}
-		if (command == "west" || command == "West")
+		else if (command == "west" || command == "West")
 		{
 			m_player->Setposisiton(Vector2(1, 0));
+		}
+		else if (command == "spells" || command == "Spells")
+		{
+			DoMagic();
 		}
 		else
 		{
@@ -234,12 +247,27 @@ void Game::HandleCommand(string command)
 		{
 			m_player->Setposisiton(Vector2(1, 2));
 		}
+		else if (command == "spells" || command == "Spells")
+		{
+		
+		
+			DoMagic();
+			if (m_player->usedFireball == true)
+			{
+				std::cout << "The Door is now on fire\n";
+				std::cout << "Turns out that thick solid wood burn pretty slowly...\n";
+				std::cout << "With a closer look you do notice the door is actually cracked open a little\n\n";
+				std::cout << "you look around to make sure no one saw and exit the dungeon\n\n";
+
+				m_isRunning = false;
+				
+			}
+		}
 		else
 		{
 			std::cout << "Invalid input!\n\n";
 		}
-	}
-	
+	}	
 
 }
 
@@ -252,35 +280,35 @@ string Game::PossibleActions()
 
 	if (m_rooms[playerX][playerY] == m_rooms[0][0])
 	{
-		return "Possible Action:\n-south\n\n";
+		return "Possible Action:\n-south\n-Spells\n\n";
 	}
 	else if (m_rooms[playerX][playerY] == m_rooms[0][1])
 	{
-		return "Possible Action:\n-West\n-East\n\n";
+		return "Possible Action:\n-West\n-East\n-Spells\n\n";
 	}
 	else if (m_rooms[playerX][playerY] == m_rooms[0][2])
 	{
-		return "Possible Action:\n-South\n-East\n-Use\n\n";
+		return "Possible Action:\n-South\n-East\n-Use\n-Spells\n\n";
 	}
 	else if (m_rooms[playerX][playerY] == m_rooms[0][3])
 	{
-		return "Possible Action:\n-North\n\n";
+		return "Possible Action:\n-North\n-Spells\n\n";
 	}
 	else if (m_rooms[playerX][playerY] == m_rooms[1][0])
 	{
-		return "Possible Action:\n-West\n-East\n-South\n-Use\n\n";
+		return "Possible Action:\n-West\n-East\n-South\n-Use\n-Spells\n\n";
 	}
 	else if (m_rooms[playerX][playerY] == m_rooms[1][1])
 	{
-		return "Possible Action:\n-North\n-Use\n\n";
+		return "Possible Action:\n-North\n-Use\n-Spells\n\n";
 	}
 	else if (m_rooms[playerX][playerY] == m_rooms[1][2])
 	{
-		return "Possible Action:\n-North\n-East\n\n";
+		return "Possible Action:\n-North\n-West\n-Spells\n\n";
 	}
 	else if (m_rooms[playerX][playerY] == m_rooms[1][3])
 	{
-		return "Possible Action:\n-South\n-CheckSpells\n\n";
+		return "Possible Action:\n-South\n-Spells\n\n";
 	}
 	else
 	{
@@ -309,6 +337,34 @@ void Game::PrintDescription()
 	else
 	{
 		m_rooms[playerX][playerY]->Description();
+	}
+}
+
+// Take input for spell - Search for spell - Do the spell if chosen
+void Game::DoMagic()
+{
+	std::cout << "what spell would you like to look for?\n";
+	std::cout << "possible spell:\n-Fireball\n-Spark\n";
+	std::cin >> m_spell;
+
+	m_player->FindSpell(m_spell);
+
+	if (m_player->FindSpell(m_spell) == true)
+	{
+		std::cout << "Spell found!\nWould you like to use it?  Yes/No\n";
+		std::cin >> m_spellCommand;
+		if (m_spellCommand == "yes" || m_spellCommand == "Yes")
+		{
+			m_player->UseSpell(m_spell);
+		}
+		else if (m_spellCommand == "no" || m_spellCommand == "No")
+		{
+			std::cout << "probably for the best\n\n";
+		}
+	}
+	else
+	{
+		std::cout << "Spell NOT found! magic has to be very precise\n\n";		
 	}
 }
 

@@ -25,7 +25,7 @@ void Cat::Use()
     {
         m_purring = false;
         m_patCount = 2;
-        m_description = "You have pat the cat to much and he scatches your arm to shreds\n";
+        m_description = "You've pat the cat to much and he scatches your arm\n";
     }
        
     
