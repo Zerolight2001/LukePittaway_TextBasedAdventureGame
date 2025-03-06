@@ -12,7 +12,7 @@ Player::Player()
 	m_spells.emplace_back(fireball->name);
 	m_spells.emplace_back(spark->name);
 
-	fireball->description = "A ball of fire wobbles out of your hands and slowly makes its way outwards\n\n";
+	fireball->description = "A ball of fire sad wobbley shuffles out of your hands and slowly makes its way outwards\n\n";
 	spark->description = "A few little sparks shoot out from your fingers...\nYou definitly should have payed more attention in your \"how to be a wizard seminare\" \n\n";
 
 }

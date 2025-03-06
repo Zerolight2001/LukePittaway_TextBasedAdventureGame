@@ -1,5 +1,6 @@
 #include "Spell.h"
 #include <iostream>
+#include <cstdlib>
 
 Spell::Spell()
 {
@@ -32,6 +33,9 @@ void Spell::PrintDescription(string spell1, string comaprison)
 {    
     if (compare(spell1, comaprison) == true)
     {
+        // Clear page
+        std::system("cls");
+        // Print descrpition
         std::cout << description;
     }
     else

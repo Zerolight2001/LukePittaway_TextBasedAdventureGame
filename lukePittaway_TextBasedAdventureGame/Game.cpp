@@ -69,19 +69,29 @@ Game::~Game()
 	// Game loop
 	while (m_isRunning)
 	{
-			
+		// Print room description	
 		PrintDescription();
-
+		// Give possible actions
 		std::cout << PossibleActions();	
-		
+		// Get input
 		std::cout << "What Action would you like to take?\n\n";
 		std::cin >> m_command;
-
+		// Use input or move character
 		HandleCommand(m_command);
+
+		if (
+			m_command == "north" || m_command == "North" ||
+			m_command == "south" || m_command == "South" ||
+			m_command == "east" || m_command == "East" ||
+			m_command == "west" || m_command == "West" ||
+			m_command == "use" || m_command == "Use"
+			)
+		{
+			// Clear page
+			std::system("cls");
+		}
+			
 		
-		
-		
-		//std::system("cls");
 		
 	}
 
@@ -101,7 +111,7 @@ void Game::HandleCommand(string command)
 	{
 		if (command == "south" || command == "South")
 		{
-			m_player->Setposisiton(Vector2(0, 1));
+			m_player->Setposisiton(Vector2(0, 1));			
 		}
 		else if (command == "spells" || command == "Spells")
 		{
@@ -117,11 +127,11 @@ void Game::HandleCommand(string command)
 	{
 		if (command == "east" || command == "East")
 		{
-			m_player->Setposisiton(Vector2(1, 0));
+			m_player->Setposisiton(Vector2(1, 0));			
 		}
 		else if (command == "west" || command == " West")
 		{
-			m_player->Setposisiton(Vector2(0, 2));
+			m_player->Setposisiton(Vector2(0, 2));			
 		}
 		else if (command == "spells" || command == "Spells")
 		{
@@ -249,7 +259,7 @@ void Game::HandleCommand(string command)
 		}
 		else if (command == "spells" || command == "Spells")
 		{
-		
+			m_player->usedFireball = false;
 		
 			DoMagic();
 			if (m_player->usedFireball == true)
@@ -345,14 +355,13 @@ void Game::DoMagic()
 {
 	std::cout << "what spell would you like to look for?\n";
 	std::cout << "possible spell:\n-Fireball\n-Spark\n";
-	std::cin >> m_spell;
-
-	m_player->FindSpell(m_spell);
+	std::cin >> m_spell;	
 
 	if (m_player->FindSpell(m_spell) == true)
 	{
 		std::cout << "Spell found!\nWould you like to use it?  Yes/No\n";
 		std::cin >> m_spellCommand;
+		std::cout << "\n";
 		if (m_spellCommand == "yes" || m_spellCommand == "Yes")
 		{
 			m_player->UseSpell(m_spell);
@@ -364,7 +373,7 @@ void Game::DoMagic()
 	}
 	else
 	{
-		std::cout << "Spell NOT found! magic has to be very precise\n\n";		
+		std::cout << "SPELL NOT FOUND! Magic has to be very precise\n\n";		
 	}
 }
 

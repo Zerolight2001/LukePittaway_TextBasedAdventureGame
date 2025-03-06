@@ -16,12 +16,14 @@ void BoxOfDonuts::Use()
 {
 	if (m_count <= 0)
 	{
-		std::cout << "you ate them all... the walls are harshly judging you\n\n";
+		m_description = "you ate them all... the walls are harshly judging you\n\n,",
+			    "A box of semi questionable donuts sit on a bench infront of you.\n";
 	}
 	else
 	{
 		--m_count;
-		std::cout << "You eat a donut. You feel the walls are sightly judging you.\n\n";
+		m_description = "You eat a donut. You feel the walls are sightly judging you.\n\n",
+			        "A box of semi questionable donuts sit on a bench infront of you.\n";
 	}
 	
 	
