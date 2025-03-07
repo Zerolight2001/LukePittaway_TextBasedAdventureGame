@@ -61,13 +61,11 @@ private:
 	Room* m_rEmpty3;
 	Room* m_rExit;
 
-	// Text colors	
-	const char* TITLE = "\x1b[5;20H";
+	// Text colors		
 	const char* YELLOW = "\x1b[93m";
 	const char* MAGENTA = "\x1b[38;5;134m";
 	const char* RED = "\x1b[91m";
 	const char* BLUE = "\x1b[94m";
-	const char* WHITE = "\x1b[97m";
 	const char* GREEN = "\x1b[38;5;121m";
 	const char* RESET_COLOR = "\x1b[0m";
 

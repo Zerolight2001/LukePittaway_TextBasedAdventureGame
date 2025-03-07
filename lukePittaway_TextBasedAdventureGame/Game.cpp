@@ -6,16 +6,15 @@
 
 
 Game::Game()
-	: m_isRunning{ true },m_isCombat{ false }, m_player{ new Player }, m_cat{new Cat}, m_boxOfDonuts{new BoxOfDonuts},
-	m_lamp{ new Lamp }, m_enemy{ new Enemy("George", 50, 10 ) }
+	: m_isRunning{ true },m_isCombat{ false }, m_player{ new Player }, m_enemy{ new Enemy("George", 50, 10 ) }
 {
 	// Create rooms 
 	m_rEntry = new Room("This is the entry of the dungeon.\nLooks like its blocked of so you will have to find another way out\n", nullptr);
 	m_rEmpty1 = new Room("Empty room, nothing but dusty floorboards\n", nullptr);
-	m_rLamp = new Room("Lamp", m_lamp);
+	m_rLamp = new Room("Lamp", m_lamp = new Lamp );
 	m_rEmpty2 = new Room("Empty room, nothing but dusty floorboards\n", nullptr);
-	m_rCat = new Room("Cat", m_cat);
-	m_rDonut = new Room("Donut", m_boxOfDonuts);
+	m_rCat = new Room("Cat", m_cat = new Cat);
+	m_rDonut = new Room("Donut", m_boxOfDonuts = new BoxOfDonuts);
 	m_rEmpty3 = new Room("Empty room, nothing but dusty floorboards, and geoges corpse...\n", nullptr);
 	m_rExit = new Room("You found the exit! Seems to blocked with a highly famable wooden door\n", nullptr);
 
@@ -89,11 +88,11 @@ Game::~Game()
 		HandleCommand(m_command);
 
 		if (
-			m_command == "north" || m_command == "North" ||
-			m_command == "south" || m_command == "South" ||
-			m_command == "east" || m_command == "East" ||
-			m_command == "west" || m_command == "West" ||
-			m_command == "use" || m_command == "Use"
+			m_command == "north"  ||
+			m_command == "south" || 
+			m_command == "east" || 
+			m_command == "west" || 
+			m_command == "use" 
 			)
 		{
 			// Clear page
@@ -280,10 +279,10 @@ void Game::HandleCommand(string command)
 			DoMagic();
 			if (m_player->usedFireball == true)
 			{
-				std::cout << "The Door is now on fire\n";
+				std::cout << BLUE << "The Door is now on fire\n";
 				std::cout << "Turns out that thick solid wood burn pretty slowly...\n";
 				std::cout << "With a closer look you do notice the door is actually cracked open a little\n\n";
-				std::cout << "you look around to make sure no one saw and exit the dungeon\n\n";
+				std::cout << "you look around to make sure no one saw and exit the dungeon\n\n" << RESET_COLOR;
 
 				m_isRunning = false;
 				
