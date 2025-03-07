@@ -3,27 +3,27 @@
 BoxOfDonuts::BoxOfDonuts()
 	: m_count{ 3 }, m_isThereDonuts{ true }
 {
-	m_description = "A box of semi questionable donuts sit on a bench infront of you.\n";
+	m_description = "A box of semi questionable donuts sit on a bench infront of you\n";
 }
 
 const void BoxOfDonuts::Description()
 {
-	std::cout << m_description;
-	std::cout << "There are " << m_count << " donuts left\n";	
+	std::cout << M_BLUE << m_description << M_RESET_COLOR;
+	std::cout << M_BLUE << "There are " << m_count << " donuts left\n" << M_RESET_COLOR;
 }
 
 void BoxOfDonuts::Use()
 {
 	if (m_count <= 0)
 	{
-		m_description = "you ate them all... the walls are harshly judging you\n\n,",
-			    "A box of semi questionable donuts sit on a bench infront of you.\n";
+		m_description = "you ate them all... the walls are harshly judging you\n\n",
+			    "A box of semi questionable donuts sit on a bench infront of you\n";
 	}
 	else
 	{
 		--m_count;
-		m_description = "You eat a donut. You feel the walls are sightly judging you.\n\n",
-			        "A box of semi questionable donuts sit on a bench infront of you.\n";
+		m_description = "You eat a donut. You feel the walls are sightly judging you\n\n",
+			        "A box of semi questionable donuts sit on a bench infront of you\n";
 	}
 	
 	

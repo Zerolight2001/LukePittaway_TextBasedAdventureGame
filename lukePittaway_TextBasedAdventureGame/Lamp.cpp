@@ -8,7 +8,7 @@ Lamp::Lamp()
 
 const void Lamp::Description()
 {
-    std::cout << m_description;
+    std::cout << M_BLUE << m_description << M_RESET_COLOR;
     
 }
 
