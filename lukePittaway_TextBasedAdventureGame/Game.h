@@ -34,11 +34,13 @@ private:
 	// Game loop vairables
 	bool m_isRunning;
 	bool m_isCombat;
+	bool m_isExit;
 	// Comand variables
 	string m_fCommand;
 	string m_command;
 	string m_spellCommand;
 	string m_spell;
+	string m_exit;
 	
 	Player* m_player;
 	Enemy* m_enemy;

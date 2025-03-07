@@ -6,7 +6,7 @@
 
 
 Game::Game()
-	: m_isRunning{ true },m_isCombat{ false }, m_player{ new Player }, m_enemy{ new Enemy("George", 50, 10 ) }
+	: m_isRunning{ true },m_isCombat{ false }, m_player{ new Player }, m_enemy{ new Enemy("George", 50, 10 ) }, m_isExit{ true }
 {
 	// Create rooms 
 	m_rEntry = new Room("This is the entry of the dungeon.\nLooks like its blocked of so you will have to find another way out\n", nullptr);
@@ -105,7 +105,24 @@ Game::~Game()
 		}			
 	}
 
-	std::cout << YELLOW << "Game over, you may leave now...\n" << RESET_COLOR;
+	// allows you to read the text at end of game before exiting 
+	while (m_isExit)
+	{
+		std::cout << YELLOW << "Game over, you may leave now...\n" << RESET_COLOR;
+
+		std::cout << "type \"exit\" to leave\n";
+		std::cin >> m_exit;
+
+		if (m_exit == "exit")
+		{
+			exit(0);
+		}
+		else
+		{
+			std::cout << RED << "invalid Input!" << RESET_COLOR;
+		}
+	}
+
 }
 
 // check to see if command is valid depending on what room it is in
