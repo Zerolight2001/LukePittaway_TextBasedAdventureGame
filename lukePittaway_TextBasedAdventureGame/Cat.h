@@ -4,6 +4,9 @@
 class Cat : public Item
 {
 public:
+	bool isCatDead;
+
+public:
 	Cat();
 
 public:
@@ -12,7 +15,7 @@ public:
 	void Use() override;
 
 private:
-	bool m_purring;
+	bool m_purring;	
 	int m_patCount;
 	string m_description;
 };

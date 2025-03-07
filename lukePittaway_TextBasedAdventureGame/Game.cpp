@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <algorithm>
+
 
 Game::Game()
 	: m_isRunning{ true },m_isCombat{ false }, m_player{ new Player }, m_cat{new Cat}, m_boxOfDonuts{new BoxOfDonuts},
@@ -62,8 +64,8 @@ Game::~Game()
  void Game::Run()
 {
 	// Welcome text
-	std::cout << "Welcome!\n";
-	std::cout << "Move through the dungeon by typing North, South, East, or West\n\n";	
+	std::cout << MAGENTA <<  "Welcome!\n";
+	std::cout << MAGENTA << "Move through the dungeon by typing North, South, East, or West\n\n" << RESET_COLOR;	
 
 	// Game loop
 	while (m_isRunning)
@@ -79,8 +81,10 @@ Game::~Game()
 		// Give possible actions
 		std::cout << PossibleActions();	
 		// Get input
-		std::cout << "What Action would you like to take?\n\n";
+		std::cout << YELLOW << "What Action would you like to take?\n\n" << RESET_COLOR;
 		std::cin >> m_command;
+		// Turns input to lowercase
+		std::transform(m_command.begin(), m_command.end(), m_command.begin(), ::tolower);
 		// Use input or move character
 		HandleCommand(m_command);
 
@@ -97,7 +101,7 @@ Game::~Game()
 		}			
 	}
 
-	std::cout << "Game over, you may leave now...\n";
+	std::cout << YELLOW << "Game over, you may leave now...\n" << RESET_COLOR;
 }
 
 // check to see if command is valid depending on what room it is in
@@ -111,23 +115,23 @@ void Game::HandleCommand(string command)
 
 	if (m_rooms[playerX][playerY] == m_rEntry)
 	{
-		if (command == "south" || command == "South")
+		if (command == "south")
 		{
 			m_player->Setposisiton(Vector2(0, 1));			
 		}
-		else if (command == "spells" || command == "Spells")
+		else if (command == "spells")
 		{
 			DoMagic();			
 		}
 		else
 		{
-			std::cout << "Invalid input!\n\n";
+			std::cout << RED << "Invalid input!\n\n" << RESET_COLOR;
 		}
 	}
 
 	else if (m_rooms[playerX][playerY] == m_rEmpty1)
 	{
-		if (command == "east" || command == "East")
+		if (command == "east")
 		{
 			m_player->Setposisiton(Vector2(1, 0));			
 		}
@@ -141,125 +145,135 @@ void Game::HandleCommand(string command)
 		}
 		else
 		{
-			std::cout << "Invalid input!\n\n";
+			std::cout << RED << "Invalid input!\n\n" << RESET_COLOR;
 		}
 	}
 
 	else if (m_rooms[playerX][playerY] == m_rLamp)
 	{
-		if (command == "east" || command == "East")
+		if (command == "east")
 		{
 			m_player->Setposisiton(Vector2(0, 1));
 		}
-		else if (command == "south" || command == "South")
+		else if (command == "south")
 		{
 			m_player->Setposisiton(Vector2(0, 3));
 		}
-		else if (command == "use" || command == "Use")
+		else if (command == "use")
 		{
 			m_lamp->Use();
 		}
-		else if (command == "spells" || command == "Spells")
+		else if (command == "spells")
 		{
 			DoMagic();
 		}
 		else
 		{
-			std::cout << "Invalid input!\n\n";
+			std::cout << RED << "Invalid input!\n\n" << RESET_COLOR;
 		}
 	}
 
 	else if (m_rooms[playerX][playerY] == m_rEmpty2)
 	{
-		if (command == "north" || command == "North")
+		if (command == "north")
 		{
 			m_player->Setposisiton(Vector2(0, 2));
 		}
-		else if (command == "spells" || command == "Spells")
+		else if (command == "spells")
 		{
 			DoMagic();
 		}
 		else
 		{
-			std::cout << "Invalid input!\n\n";
+			std::cout << RED << "Invalid input!\n\n" << RESET_COLOR;
 		}
 	}
 
 	else if (m_rooms[playerX][playerY] == m_rCat)
 	{
-		if (command == "east" || command == "East")
+		if (command == "east")
 		{
 			m_player->Setposisiton(Vector2(1, 2));
 		}
-		else if (command == "west" || command == " West")
+		else if (command == "west")
 		{
 			m_player->Setposisiton(Vector2(0, 1));
 		}
-		else if (command == "south" || command == "South")
+		else if (command == "south")
 		{
 			m_player->Setposisiton(Vector2(1, 1));
 		}
-		else if (command == "use" || command == "Use")
+		else if (command == "use")
 		{
 			m_cat->Use();
 		}
-		else if (command == "spells" || command == "Spells")
+		else if (command == "spells")
 		{
+			m_player->usedFireball = false;
 			DoMagic();
+			if (m_cat->isCatDead == false && m_player->usedFireball == true)
+			{			
+					std::cout << RED << "The cat was ammused by the light and stayed still for to long\n";
+					std::cout << "His fur bursts into flames and he is now bouncing of the walls chaotically\n";
+					std::cout << "You watch as he the boucing becomes slower until you see him thud against the wall\n" << RESET_COLOR;
+
+					m_cat->isCatDead = true;				
+			}
+
 		}
 		else
 		{
-			std::cout << "Invalid input!\n\n";
+			std::cout << RED << "Invalid input!\n\n" << RESET_COLOR;
 		}
 	}
 
 	else if (m_rooms[playerX][playerY] == m_rDonut)
 	{
-		if (command == "north" || command == "North")
+		if (command == "north")
 		{
 			m_player->Setposisiton(Vector2(1, 0));
 		}
-		else if (command == "use" || command == "Use")
+		else if (command == "use")
 		{
 			m_boxOfDonuts->Use();
 		}
-		else if (command == "spells" || command == "Spells")
+		else if (command == "spells")
 		{
 			DoMagic();
 		}
 		else
 		{
-			std::cout << "Invalid input!\n\n";
+			std::cout << RED << "Invalid input!\n\n" << RESET_COLOR;
 		}
 	}
 
 	else if (m_rooms[playerX][playerY] == m_rEmpty3)
 	{
-		if (command == "north" || command == "North")
+		if (command == "north")
 		{
 			m_player->Setposisiton(Vector2(1, 3));
 		}
-		else if (command == "west" || command == "West")
+		else if (command == "west")
 		{
 			m_player->Setposisiton(Vector2(1, 0));
 		}
-		else if (command == "spells" || command == "Spells")
+		else if (command == "spells")
 		{
 			DoMagic();
 		}
 		else
 		{
-			std::cout << "Invalid input!\n\n";
+			std::cout << RED << "Invalid input!\n\n" << RESET_COLOR;
 		}
 	}
 
 	else if (m_rooms[playerX][playerY] == m_rExit)
 	{
-		if (command == "south" || command == "South")
+		if (command == "south")
 		{
 			m_player->Setposisiton(Vector2(1, 2));
 		}
-		else if (command == "spells" || command == "Spells")
+		else if (command == "spells")
 		{
 			m_player->usedFireball = false;
 		
@@ -277,7 +291,7 @@ void Game::HandleCommand(string command)
 		}
 		else
 		{
-			std::cout << "Invalid input!\n\n";
+			std::cout << RED << "Invalid input!\n\n" << RESET_COLOR;
 		}
 	}	
 
@@ -354,27 +368,35 @@ void Game::PrintDescription()
 // Take input for spell - Search for spell - Do the spell if chosen
 void Game::DoMagic()
 {
-	std::cout << "what spell would you like to look for?\n";
+	std::cout << YELLOW << "what spell would you like to look for?\n" << RESET_COLOR;
 	std::cout << "possible spell:\n-Fireball\n-Spark\n";
-	std::cin >> m_spell;	
+	std::cin >> m_spell;		
 
 	if (m_player->FindSpell(m_spell) == true)
 	{
-		std::cout << "Spell found!\nWould you like to use it?  Yes/No\n";
+		std::cout << GREEN << "Spell found!\nWould you like to use it?  Yes/No\n" << RESET_COLOR;
 		std::cin >> m_spellCommand;
+		std::transform(m_spellCommand.begin(), m_spellCommand.end(), m_spellCommand.begin(), ::tolower);
+
 		std::cout << "\n";
-		if (m_spellCommand == "yes" || m_spellCommand == "Yes")
+		if (m_spellCommand == "yes")
 		{
 			m_player->UseSpell(m_spell);
 		}
-		else if (m_spellCommand == "no" || m_spellCommand == "No")
+		else if (m_spellCommand == "no")
 		{
+			// Clear page
+			std::system("cls");
 			std::cout << "probably for the best\n\n";
+		}
+		else
+		{
+			std::cout << RED << "Invalid Input" << RESET_COLOR;
 		}
 	}
 	else
 	{
-		std::cout << "SPELL NOT FOUND! Magic has to be very precise\n\n";		
+		std::cout << RED << "SPELL NOT FOUND! Magic has to be very precise\n\n" << RESET_COLOR;		
 	}
 }
 
@@ -385,12 +407,12 @@ void Game::Combat(Enemy enemy)
 	srand(time(nullptr));
 	
 	// Encounter text
-	std::cout << "You walk into the room and feel something tug at your feet\n";
+	std::cout << BLUE << "You walk into the room and feel something tug at your feet\n";
 	std::cout << "You look down to see that an ethernet cable has just been ripped from the wall\n";
 	std::cout << "Its at this moment you hear raging footsteps stampeeding down the corridor\n\n";
 	std::cout << "A guy comes bursting out from depths of the dungeon still wearing his headset and holding a controller\n";
-	std::cout << "He sees you standing over the chord\n\n";
-	std::cout << "You are now in combat!\n\n";
+	std::cout << "He sees you standing over the chord\n\n" << RESET_COLOR;
+	std::cout << RED << "You are now in combat!\n\n" << RESET_COLOR;
 
 	// Fight loop
 	while (m_isCombat)
@@ -402,45 +424,47 @@ void Game::Combat(Enemy enemy)
 		// if player is alive let them do something 
 		if (m_player->GetHealth() > 0)
 		{
-			std::cout << "What action would you like to take\n";
-			std::cout << "Possible actions:\n-Attack\n-spells\n-Roll\n-run\n";
+			std::cout << YELLOW << "What action would you like to take\n" << RESET_COLOR;
+			std::cout << "Possible actions:\n-Attack\n-spells\n-Roll\n-Run\n";
 			std::cin >> m_fCommand;
+			// Change command to lowercase
+			std::transform(m_fCommand.begin(), m_fCommand.end(), m_fCommand.begin(), ::tolower);
 			std::cout << "\n\n";
 
-			if (m_fCommand == "attack" || m_fCommand == "Attack")
+			if (m_fCommand == "attack")
 			{
 				// Clear page
 				std::system("cls");
-				std::cout << "You punch him\n\n";
+				std::cout << GREEN <<"You punch him\n\n" << RESET_COLOR;
 				m_enemy->TakeDamage(m_player->GetDamage());
 			}
-			else if (m_fCommand == "spells" || m_fCommand == "Spells")
+			else if (m_fCommand == "spells")
 			{
 				DoMagic();
 			}
-			else if (m_fCommand == "roll" || m_fCommand == "Roll")
+			else if (m_fCommand == "roll")
 			{
 				// Clear page
-				std::system("cls");
-				std::cout << "you roll out of the way of danger\n\n";
+				std::system("cls");				
 			}
-			else if (m_fCommand == "run" || m_fCommand == "Run")
+			else if (m_fCommand == "run")
 			{
 				// Clear page
 				std::system("cls");
-				std::cout << "There is no running!! you must stay and face what you have done\n\n";
+				std::cout << RED << "There is no running!! you must stay and face what you have done\n\n" << RESET_COLOR;
 			}
 			else
 			{
 				// Clear page
 				std::system("cls");
-				std::cout << "Invalid input\n";
+				std::cout << RED << "Invalid input\n" << RESET_COLOR;
 			}
 		}
 		else 
 		{
-			m_isCombat = false;
+
 			m_isRunning = false;
+			break;
 		}
 		
 		// pick random number between 1 and 3
@@ -454,13 +478,14 @@ void Game::Combat(Enemy enemy)
 			case 1:
 			{
 				// Attack
-				if (m_fCommand == "roll" || m_fCommand == "Roll")
-				{							
+				if (m_fCommand == "roll")
+				{		
+					std::cout << GREEN << "George tried to attacked you but due to your sick roll it was a swing and a miss\n\n" << RESET_COLOR;
 					break;
 				}
 				else
 				{					
-					std::cout << m_enemy->name << " has attacked you\n\n";
+					std::cout << RED << m_enemy->name << " has attacked you\n\n" << RESET_COLOR;
 					m_player->TakeDamage(m_enemy->Getdamage());
 					break;
 				}				
@@ -468,17 +493,21 @@ void Game::Combat(Enemy enemy)
 			case 2:
 			{
 				// Block
-				if (m_fCommand == "attack" || m_fCommand == "Attack")
+				if (m_fCommand == "attack")
 				{
-					std::cout << "you got blocked\n\n";
+					std::cout << RED << "you got blocked\n\n" << RESET_COLOR;
 					m_enemy->GainHealth(m_player->GetDamage());
+				}
+				else
+				{
+					std::cout << GREEN << "He thows his arms up like a fool trying to block your roll\n\n" << RESET_COLOR;
 				}
 				break;
 			}
 			case 3:
 			{
 				// freezes
-				std::cout << "He is to angry to move\n\n";
+				std::cout << RED << "He is to angry to move\n\n" << RESET_COLOR;
 				break;
 			}
 			}
@@ -493,7 +522,7 @@ void Game::Combat(Enemy enemy)
 
 	// Clear page
 	std::system("cls");
-	std::cout << enemy.name << " Has Been Defeated\n\n";
+	std::cout << GREEN << enemy.name << " Has Been Defeated\n\n" << RESET_COLOR;
 
 
 }
