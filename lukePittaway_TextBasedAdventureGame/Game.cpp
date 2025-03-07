@@ -11,7 +11,7 @@ Game::Game()
 	// Create rooms 
 	m_rEntry = new Room("This is the entry of the dungeon.\nLooks like its blocked of so you will have to find another way out\n", nullptr);
 	m_rEmpty1 = new Room("Empty room, nothing but dusty floorboards\n", nullptr);
-	m_rLamp = new Room("Lamp", m_lamp = new Lamp );
+	m_rLamp = new Room("Lamp", m_lamp = new Lamp);
 	m_rEmpty2 = new Room("Empty room, nothing but dusty floorboards\n", nullptr);
 	m_rCat = new Room("Cat", m_cat = new Cat);
 	m_rDonut = new Room("Donut", m_boxOfDonuts = new BoxOfDonuts);
@@ -40,6 +40,8 @@ Game::~Game()
 	m_rDonut = nullptr;
 	delete m_cat;
 	m_cat = nullptr;
+	delete m_rCat;
+	m_rCat = nullptr;
 	delete m_rEmpty2;
 	m_rEmpty2 = nullptr;
 	delete m_rLamp;
@@ -48,14 +50,14 @@ Game::~Game()
 	m_rEmpty1 = nullptr;
 	delete m_rEntry;
 	m_rEntry = nullptr;
-	delete m_enemy;
-	m_enemy = nullptr;
 	delete m_lamp;
 	m_lamp = nullptr;
 	delete m_boxOfDonuts;
 	m_boxOfDonuts = nullptr;
 	delete m_cat;
 	m_cat = nullptr;
+	delete m_enemy;
+	m_enemy = nullptr;
 	delete m_player;
 	m_player = nullptr;
 }
