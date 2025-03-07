@@ -64,6 +64,9 @@ Game::~Game()
 
  void Game::Run()
 {
+	 // Clear page
+	 system("cls");
+
 	// Welcome text
 	std::cout << MAGENTA <<  "Welcome!\n";
 	std::cout << MAGENTA << "Move through the dungeon by typing North, South, East, or West\n\n" << RESET_COLOR;	
